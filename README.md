@@ -33,6 +33,8 @@
 
    ```bash
    git clone https://github.com/Lalka00pq/AI_Assistant_for_Product_Descriptions
+   ```
+   ```bash
    cd AI_Assistant_for_Product_Descriptions
    ```
 
