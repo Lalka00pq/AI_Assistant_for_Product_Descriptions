@@ -32,8 +32,8 @@
 1. Скачайте проект или склонируйте репозиторий:
 
    ```bash
-   git clone <repo>
-   
+   git clone https://github.com/Lalka00pq/AI_Assistant_for_Product_Descriptions
+   cd AI_Assistant_for_Product_Descriptions
    ```
 
 2. Установите зависимости:
