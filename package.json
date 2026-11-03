@@ -1,0 +1,19 @@
+{
+  "name": "product-card-generator",
+  "version": "1.0.0",
+  "description": "Генератор черновиков карточек товаров для B2B-интернет-магазина контрольно-измерительных приборов",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.0",
+    "express": "^5.1.0"
+  }
+}

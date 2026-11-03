@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Генератор карточек товаров</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <header class="page-header">
+        <p class="eyebrow">Карточки товаров</p>
+        <h1>Генератор черновиков для интернет-магазина</h1>
+        <p class="lead">
+          Модель использует только те данные, которые вы укажете. Всё, чего нет, отмечается как «данных нет».
+        </p>
+      </header>
+
+      <section class="panel" id="input-screen">
+        <div class="samples">
+          <span class="samples-label">Загрузить пример:</span>
+          <div class="samples-list" id="sample-buttons"></div>
+          <p class="field-error" id="samples-error" hidden></p>
+        </div>
+
+        <div class="tabs" role="tablist">
+          <button type="button" class="tab" role="tab" id="tab-form" data-tab="form" aria-selected="true" aria-controls="panel-form">Заполнить формой</button>
+          <button type="button" class="tab" role="tab" id="tab-json" data-tab="json" aria-selected="false" aria-controls="panel-json">Вставить JSON</button>
+        </div>
+
+        <div class="tab-panel" id="panel-form" role="tabpanel" aria-labelledby="tab-form">
+          <div class="field">
+            <label for="name">Название товара <span class="required">*</span></label>
+            <input id="name" type="text" autocomplete="off" placeholder="Например: Манометр показывающий DM 02" />
+            <p class="field-error" id="error-name" hidden>Укажите название товара</p>
+          </div>
+
+          <div class="field">
+            <label for="manufacturer">Производитель <span class="required">*</span></label>
+            <input id="manufacturer" type="text" autocomplete="off" placeholder="Например: Манотомь" />
+            <p class="field-error" id="error-manufacturer" hidden>Укажите производителя</p>
+          </div>
+
+          <div class="field">
+            <label for="description">Описание <span class="optional">необязательно</span></label>
+            <textarea id="description" rows="4" placeholder="Текст из технического паспорта или описания"></textarea>
+          </div>
+
+          <fieldset class="field">
+            <legend>Характеристики</legend>
+            <p class="hint">Добавляйте только то, что известно. Пустые строки будут пропущены.</p>
+            <div class="specs" id="specs"></div>
+            <button type="button" class="btn btn-ghost btn-sm" id="add-spec">+ Добавить характеристику</button>
+          </fieldset>
+        </div>
+
+        <div class="tab-panel" id="panel-json" role="tabpanel" aria-labelledby="tab-json" hidden>
+          <div class="field">
+            <label for="json-input">Данные товара в формате JSON</label>
+            <textarea id="json-input" class="json-input" rows="16" spellcheck="false" placeholder='{"name": "Название товара", "manufacturer": "Производитель", "specs": {"параметр": "значение"}, "description": "Описание"}'></textarea>
+            <p class="field-error" id="json-error" hidden></p>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-lg btn-block" id="submit">Сгенерировать карточку</button>
+      </section>
+
+      <section class="panel status" id="loading-screen" hidden>
+        <div class="spinner" aria-hidden="true"></div>
+        <p class="status-title">Отправляем данные в модель...</p>
+        <p class="status-hint">Обычно это занимает несколько секунд</p>
+      </section>
+
+      <section class="panel" id="error-screen" hidden>
+        <div class="alert alert-error" role="alert">
+          <p class="alert-title">Не удалось создать карточку</p>
+          <p id="error-message"></p>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn btn-outline" id="error-edit">Изменить данные</button>
+          <button type="button" class="btn btn-primary" id="error-retry">Попробовать снова</button>
+        </div>
+      </section>
+
+      <section class="panel" id="result-screen" hidden>
+        <div class="result-header">
+          <h2>Черновик карточки</h2>
+          <div class="actions">
+            <button type="button" class="btn btn-outline btn-sm" id="edit-data">Изменить данные</button>
+            <button type="button" class="btn btn-outline btn-sm" id="regenerate">Сгенерировать заново</button>
+            <button type="button" class="btn btn-primary btn-sm" id="copy-all">Скопировать всё</button>
+          </div>
+        </div>
+
+        <div class="alert alert-warning" id="missing-box" hidden>
+          <p class="alert-title">Нужно уточнить у производителя</p>
+          <ul class="alert-list" id="missing-list"></ul>
+        </div>
+
+        <div class="tabs" role="tablist">
+          <button type="button" class="tab" role="tab" data-result-tab="card" aria-selected="true">Карточка</button>
+          <button type="button" class="tab" role="tab" data-result-tab="json" aria-selected="false">JSON</button>
+        </div>
+
+        <div class="tab-panel" id="result-card"></div>
+
+        <div class="tab-panel" id="result-json" hidden>
+          <div class="actions actions-end">
+            <button type="button" class="btn btn-outline btn-sm" id="copy-json">Скопировать JSON</button>
+          </div>
+          <pre class="json-output" id="json-output"></pre>
+        </div>
+      </section>
+    </main>
+
+    <template id="spec-template">
+      <div class="spec-row">
+        <input class="spec-name" type="text" aria-label="Параметр" placeholder="Параметр, например: присоединение" />
+        <input class="spec-value" type="text" aria-label="Значение" placeholder="Значение, например: G1/2" />
+        <button type="button" class="btn btn-ghost btn-icon spec-remove" aria-label="Удалить характеристику">&times;</button>
+      </div>
+    </template>
+
+    <script type="module" src="/js/main.js"></script>
+  </body>
+</html>
